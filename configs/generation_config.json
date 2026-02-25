@@ -1,0 +1,173 @@
+{
+  "baseline": {
+    "model_name": "stabilityai/stable-diffusion-xl-base-1.0",
+    "model_variant": null,
+    "use_safetensors": true,
+    "prompt_file": "prompts/DreamLayer-Prompt-Kaggle.txt",
+    "output_dir": "generation/outputs/baseline",
+    "seed": 42,
+    "seed_strategy": "incremental",
+    "guidance_scale": 7.5,
+    "num_inference_steps": 30,
+    "sampler": "default",
+    "width": 1024,
+    "height": 1024,
+    "negative_prompt": "",
+    "use_structured_negative_prompt": true,
+    "negative_prompt_strategy": {
+      "clutter_suppression_level": "medium",
+      "include_quality_terms": true,
+      "include_hallucination_terms": true,
+      "include_style_terms": true,
+      "enforce_expected_object_lock": true,
+      "extract_expected_objects": true,
+      "spacy_model": "en_core_web_sm",
+      "custom_terms": [
+        "frame artifacts",
+        "cut off objects"
+      ]
+    },
+    "device": "auto",
+    "torch_dtype": "auto"
+  },
+  "prompt_optimization": {
+    "prompt_file": "prompts/DreamLayer-Prompt-Kaggle.txt",
+    "output_path": "generation/optimized_prompts.json",
+    "spacy_model": "en_core_web_sm",
+    "keep_unmapped_nouns": false,
+    "expand_noun_phrases": true,
+    "reinforce_object_count": true,
+    "add_realism_bias": true,
+    "reduce_ambiguity": true,
+    "realism_prefix": "A photorealistic, high-resolution photograph with natural lighting and sharp details.",
+    "ambiguity_directive": "Keep object boundaries clear, avoid occlusion, and use a simple uncluttered composition.",
+    "anti_style_directive": "Avoid abstract art, heavy stylization, strong motion blur, and ambiguous silhouettes."
+  },
+  "multisample": {
+    "model_name": "stabilityai/stable-diffusion-xl-base-1.0",
+    "model_variant": null,
+    "use_safetensors": true,
+    "prompt_file": "prompts/DreamLayer-Prompt-Kaggle.txt",
+    "output_dir": "generation/outputs/multisample",
+    "seed": 42,
+    "seed_strategy": "incremental",
+    "guidance_scale": 7.5,
+    "num_inference_steps": 30,
+    "sampler": "default",
+    "width": 1024,
+    "height": 1024,
+    "negative_prompt": "",
+    "use_structured_negative_prompt": true,
+    "negative_prompt_strategy": {
+      "clutter_suppression_level": "medium",
+      "include_quality_terms": true,
+      "include_hallucination_terms": true,
+      "include_style_terms": true,
+      "enforce_expected_object_lock": true,
+      "extract_expected_objects": true,
+      "spacy_model": "en_core_web_sm",
+      "custom_terms": [
+        "frame artifacts",
+        "cut off objects"
+      ]
+    },
+    "device": "auto",
+    "torch_dtype": "auto",
+    "num_variants": 4,
+    "guidance_scale_step": 0.3,
+    "variant_seed_step": 1,
+    "final_output_dir": "generation/outputs/multisample/final",
+    "temp_output_dir": "generation/outputs/multisample/temp",
+    "metadata_path": "generation/outputs/multisample/metadata.json",
+    "keep_temp_images": true,
+    "evaluator_spec": null
+  },
+  "evaluation": {
+    "yolo": {
+      "weights": "models/yolo/yolov8n.pt",
+      "allow_download": false,
+      "confidence_threshold": 0.25,
+      "iou_threshold": 0.7,
+      "imgsz": 640,
+      "max_det": 300,
+      "device": null,
+      "verbose": false,
+      "keep_unmapped_labels": false,
+      "label_aliases": {}
+    },
+    "offline_runner": {
+      "prompt_file": null,
+      "spacy_model": "en_core_web_sm",
+      "keep_unmapped_expected_objects": false,
+      "generated_output_dir": null,
+      "report_path": "experiments/offline_validation/report.json",
+      "per_prompt_csv_path": "experiments/offline_validation/per_prompt_metrics.csv"
+    }
+  },
+  "optimization": {
+    "hyperparameter_sweep": {
+      "output_dir": "experiments/hyperparameter_sweep",
+      "guidance_scales": [6.5, 7.5, 8.5],
+      "steps": [25, 30],
+      "samplers": ["default", "euler_a"],
+      "seeds": [42, 43]
+    },
+    "realism_bias_tuning": {
+      "output_dir": "experiments/realism_bias_tuning",
+      "variants": [
+        "baseline",
+        "photorealistic",
+        "photorealistic_simple_background",
+        "stylized"
+      ],
+      "photorealistic_prefix": "A photorealistic, high-resolution photograph with natural lighting and true-to-life textures.",
+      "photorealistic_directive": "Ensure clear object boundaries, realistic scale, and high YOLO-detectable object visibility.",
+      "background_simplification_directive": "Use a simple uncluttered background with minimal extra props and low visual noise.",
+      "stylized_prefix": "A stylized artistic illustration with painterly rendering and expressive visual style.",
+      "stylized_directive": "Prioritize stylized aesthetics over strict photorealistic appearance."
+    },
+    "object_count_reinforcement": {
+      "output_dir": "experiments/object_count_reinforcement",
+      "variants": ["baseline", "count_reinforced"],
+      "reinforcement_suffix": "Ensure every required object is present and avoid missing requested objects.",
+      "fallback_count": 1,
+      "use_spacy_count_inference": true,
+      "spacy_model": "en_core_web_sm",
+      "max_false_positive_examples": 10
+    }
+  },
+  "export": {
+    "final_image_generation": {
+      "output_dir": "dreamlayer_export/final_images",
+      "frozen_config_path": "dreamlayer_export/frozen_generation_config.json",
+      "report_path": "dreamlayer_export/final_generation_report.json",
+      "clean_output_dir": true,
+      "prompt_file": null,
+      "prompt_spacy_model": "en_core_web_sm",
+      "keep_unmapped_expected_objects": false,
+      "use_best_hyperparameters": true,
+      "hyperparameter_report_path": "experiments/hyperparameter_sweep/sweep_report.json",
+      "use_best_realism_variant": true,
+      "realism_report_path": "experiments/realism_bias_tuning/realism_bias_report.json",
+      "default_realism_variant": "baseline",
+      "use_best_object_count_variant": true,
+      "object_count_report_path": "experiments/object_count_reinforcement/object_count_reinforcement_report.json",
+      "default_object_count_variant": "baseline",
+      "require_reports": false
+    },
+    "report_bundle_generation": {
+      "output_dir": "dreamlayer_export",
+      "source_image_dir": "dreamlayer_export/final_images",
+      "results_csv_path": "dreamlayer_export/results.csv",
+      "config_dreamlayer_path": "dreamlayer_export/config-dreamlayer.json",
+      "prompt_file": null,
+      "copy_images_to_output_dir": true,
+      "clean_output_images": true,
+      "enforce_exact_one_image_per_prompt": true,
+      "validate_integrity": true,
+      "confirm_no_manual_edits": true,
+      "final_generation_report_path": "dreamlayer_export/final_generation_report.json",
+      "frozen_config_path": "dreamlayer_export/frozen_generation_config.json"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+[project]
+name = "t2i-f1-challenge"
+version = "0.1.0"
+description = "Text-to-Image F1 optimization pipeline scaffold for Kaggle."
+readme = "README.md"
+requires-python = ">=3.10,<3.14"
+dependencies = [
+  "torch==2.7.1",
+  "torchvision==0.22.1",
+  "torchaudio==2.7.1",
+  "diffusers==0.36.0",
+  "transformers==4.57.1",
+  "accelerate==1.12.0",
+  "safetensors==0.7.0",
+  "ultralytics==8.4.14",
+  "spacy==3.8.11",
+  "en-core-web-sm @ https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.8.0/en_core_web_sm-3.8.0-py3-none-any.whl",
+  "numpy==1.26.4",
+  "pandas==2.2.3",
+  "pydantic==2.12.4",
+  "pillow==11.2.1",
+]
+
+[dependency-groups]
+dev = [
+  "pytest==8.4.2",
+  "pytest-cov==7.0.0",
+  "ruff==0.15.2",
+  "black==26.1.0",
+  "mypy==1.19.1",
+  "pre-commit==4.5.1",
+]
+
+[tool.poetry]
+package-mode = false
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

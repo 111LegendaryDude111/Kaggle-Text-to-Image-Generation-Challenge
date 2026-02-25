@@ -1,0 +1,57 @@
+# Python cache and tooling artifacts
+__pycache__/
+*.py[cod]
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage*
+htmlcov/
+
+# Virtual environments and package caches
+.venv/
+venv/
+env/
+.uv-cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Build / packaging artifacts
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Runtime logs and temporary files
+logs/
+tmp/
+*.log
+
+# Generated challenge artifacts
+generation/outputs/
+experiments/
+dreamlayer_export/
+drive_link_folder_notebook/
+drive-link-folder/
+submission/*.csv
+
+# External assets and model weights
+models/
+third_party/
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.onnx
+
+# Markdown docs (keep only main README)
+**/*.md
+!README.md
+!Readme.md
