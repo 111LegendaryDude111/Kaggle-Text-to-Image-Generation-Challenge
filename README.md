@@ -1,6 +1,6 @@
 # t2i-f1-challenge
 
-## 1. Описание решения
+## 1. Описание решения TOP-15, final score: 0.30724
 
 Kaggle Text-to-Image Challenge - задача оптимизации object-level F1. Целевой контур:
 
